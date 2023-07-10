@@ -7,6 +7,7 @@ const loadPhones = (search , datalimit) => {
 
 const displayPhones = (phones , datalimit) => {
   //  console.log(phones.length)
+  console.log(phones)
   
   const phonesContainer = document.getElementById("phones-container");
   phonesContainer.textContent = "";
@@ -20,6 +21,7 @@ const displayPhones = (phones , datalimit) => {
   else{
     showMore.classList.add('d-none')
   }
+
 
   // display No pohne Found message
   const noPhone = document.getElementById("no-phone-found");
@@ -36,15 +38,17 @@ const displayPhones = (phones , datalimit) => {
   // display 10 phones
   phones.forEach((element) => {
     // console.log(element)
+    // loadDetails(element.slug)
     const phonediv = document.createElement("div");
     phonediv.classList.add("col");
     phonediv.innerHTML = `
         <div class="card">
-                    <img src="${element.image}" class="card-img-top p-4" alt="...">
+                    <img src="${element.image}" class="card-img-top p-4 w-50" alt="...">
                     <div class="card-body">
                       <h5 class="card-title">${element.phone_name}</h5>
-                      <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    </div>
+                      <p class="card-text">${element.phone_name}</p>
+                      <button onclick="loadDetails('${element.slug}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">show details</button>
+                      </div>
                   </div>
         `;
     phonesContainer.appendChild(phonediv);
@@ -83,6 +87,27 @@ const toggleLoader = (loader) => {
   }
 };
 
+const loadDetails = (idName) => {
+  fetch(` https://openapi.programming-hero.com/api/phone/${idName}`)
+  .then(res => res.json())
+  .then(data => showModalDetals(data.data))
+} 
+const showModalDetals = (data) => {
+console.log(data)
+ const modalTitle =  document.getElementById('modalTitle')
+  modalTitle.innerText = data.name
+  
+  const divDetail = document.getElementById('details')
+  divDetail.innerHTML = `
+  
+  <img src="${data.image}" alt="">
+  <p>Relase date :  ${data.releaseDate}</p>
+  <p>Storage :  ${data.mainFeatures.storage}</p>
+
+  `
+  console.log(data.releaseDate)
 
 
-// loadPhones()
+}
+// loadDetails()
+loadPhones("apple")
