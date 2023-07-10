@@ -6,8 +6,8 @@ const loadPhones = (search , datalimit) => {
 };
 
 const displayPhones = (phones , datalimit) => {
-  //  console.log(phones.length)
-  console.log(phones)
+  // //  console.log(phones.length)
+  // console.log(phones)
   
   const phonesContainer = document.getElementById("phones-container");
   phonesContainer.textContent = "";
@@ -68,6 +68,14 @@ const processSearch = (datalimit) => {
 
 }
 
+//  enter key handler 
+document.getElementById('phone-field').addEventListener('keypress' ,function(e){
+ 
+  if(e.key === 'Enter'){
+    processSearch(10)
+  }
+})
+
 
 const searchBtn = document.getElementById("search-phone").addEventListener("click", function () {
     processSearch(10)
@@ -93,7 +101,9 @@ const loadDetails = (idName) => {
   .then(data => showModalDetals(data.data))
 } 
 const showModalDetals = (data) => {
-console.log(data)
+
+  // console.log(data)
+
  const modalTitle =  document.getElementById('modalTitle')
   modalTitle.innerText = data.name
   
@@ -105,9 +115,9 @@ console.log(data)
   <p>Storage :  ${data.mainFeatures.storage}</p>
 
   `
-  console.log(data.releaseDate)
+  // console.log(data.releaseDate)
 
 
 }
-// loadDetails()
-loadPhones("apple")
+// // loadDetails()
+// loadPhones("apple")
